@@ -2,6 +2,7 @@ package com.damian.ecommerce.backend.infrastructure.Adapter;
 
 import com.damian.ecommerce.backend.domain.model.User;
 import com.damian.ecommerce.backend.domain.port.IUserRepository;
+import com.damian.ecommerce.backend.infrastructure.Mapper.UserMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -9,13 +10,16 @@ public class UserCrudRepositoryImpl implements IUserRepository {
 
     private final IUserCrudRepository iUserCrudRepository;
 
-    public UserCrudRepositoryImpl(IUserCrudRepository iUserCrudRepository) {
+    private final UserMapper userMapper;
+
+    public UserCrudRepositoryImpl(IUserCrudRepository iUserCrudRepository, UserMapper userMapper) {
         this.iUserCrudRepository = iUserCrudRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
     public User save(User user) {
-        return null;
+        return userMapper.toUser(iUserCrudRepository.save(userMapper.toUserEntity(user)));
     }
 
     @Override
@@ -25,6 +29,8 @@ public class UserCrudRepositoryImpl implements IUserRepository {
 
     @Override
     public User findById(Integer id) {
-        return null;
+        return iUserCrudRepository.findById(id)
+                .map(userMapper::toUser)
+                .orElse(null);
     }
 }
