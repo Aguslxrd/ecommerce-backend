@@ -1,9 +1,7 @@
 package com.damian.ecommerce.backend.infrastructure.Mapper;
 
 import com.damian.ecommerce.backend.domain.model.Category;
-import com.damian.ecommerce.backend.domain.model.User;
 import com.damian.ecommerce.backend.infrastructure.Entity.CategoryEntity;
-import com.damian.ecommerce.backend.infrastructure.Entity.UserEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,10 +16,9 @@ public interface CategoryMapper {
             @Mapping(source = "dateCreatedAt", target = "dateCreatedAt"),
             @Mapping(source = "dateUpdatedAt", target = "dateUpdatedAt")
     })
-    Category toCategoryEntity(CategoryEntity categoryEntity);
+    Category toCategory(CategoryEntity categoryEntity);
 
     Iterable<Category> toCategoryList(Iterable<CategoryEntity> categoryEntities);
 
-    @InheritInverseConfiguration
     CategoryEntity toCategoryEntity(Category category);
 }
