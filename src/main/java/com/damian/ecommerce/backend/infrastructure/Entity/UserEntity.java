@@ -1,4 +1,4 @@
-package com.damian.ecommerce.backend.infrastructure;
+package com.damian.ecommerce.backend.infrastructure.Entity;
 
 import com.damian.ecommerce.backend.domain.model.UserType;
 import jakarta.persistence.*;

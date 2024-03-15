@@ -1,7 +1,7 @@
 package com.damian.ecommerce.backend.infrastructure.Mapper;
 
 import com.damian.ecommerce.backend.domain.model.User;
-import com.damian.ecommerce.backend.infrastructure.UserEntity;
+import com.damian.ecommerce.backend.infrastructure.Entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
