@@ -2,12 +2,14 @@ package com.damian.ecommerce.backend.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product {
     private Integer id;
     private String name;
@@ -18,4 +20,5 @@ public class Product {
     private LocalDateTime dateCreatedAt;
     private LocalDateTime dateUpdatedAt;
     private Integer userId;
+    private Integer categoryId;
 }
