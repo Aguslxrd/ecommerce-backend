@@ -24,7 +24,7 @@ public class CategoryController {
         if (category == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(categoryService.save(category), HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.save(category), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
