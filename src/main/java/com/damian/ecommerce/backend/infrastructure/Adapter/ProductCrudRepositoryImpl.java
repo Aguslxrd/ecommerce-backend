@@ -3,7 +3,9 @@ package com.damian.ecommerce.backend.infrastructure.Adapter;
 import com.damian.ecommerce.backend.domain.model.Product;
 import com.damian.ecommerce.backend.domain.port.IProductRepository;
 import com.damian.ecommerce.backend.infrastructure.Mapper.ProductMapper;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductCrudRepositoryImpl implements IProductRepository {
 
     private final IProductCrudRepository iProductCrudRepository;
