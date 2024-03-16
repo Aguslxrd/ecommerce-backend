@@ -9,13 +9,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring", uses =  {IOrderProductMapper.class, })
+@Mapper(componentModel = "spring", uses =  {IOrderProductMapper.class })
 public interface IOrderMapper {
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "dateCreated", target = "dateCreated"),
             @Mapping(source = "orderProducts", target = "orderProducts"),
-            @Mapping(source = "state", target = "state"),
+            @Mapping(source = "orderState", target = "orderState"),
             @Mapping(source = "userEntity.id", target = "userId")
     })
     Order toOrder(OrderEntity orderEntity);
