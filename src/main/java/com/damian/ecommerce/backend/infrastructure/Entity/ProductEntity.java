@@ -23,12 +23,12 @@ public class ProductEntity {
     private String urlImage;
     private BigDecimal price;
     @CreationTimestamp
-    @Column(updatable = false)
     private LocalDateTime dateCreatedAt;
     @UpdateTimestamp
     private LocalDateTime dateUpdatedAt;
+
     @ManyToOne
-    private UserEntity user;
+    private UserEntity userEntity;
     @ManyToOne
     private CategoryEntity categoryEntity;
 }
