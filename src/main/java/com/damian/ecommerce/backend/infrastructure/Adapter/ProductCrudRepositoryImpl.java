@@ -2,6 +2,7 @@ package com.damian.ecommerce.backend.infrastructure.Adapter;
 
 import com.damian.ecommerce.backend.domain.model.Product;
 import com.damian.ecommerce.backend.domain.port.IProductRepository;
+import com.damian.ecommerce.backend.infrastructure.Exceptions.ProductNotFoundException;
 import com.damian.ecommerce.backend.infrastructure.Mapper.ProductMapper;
 import org.springframework.stereotype.Repository;
 
@@ -30,14 +31,14 @@ public class ProductCrudRepositoryImpl implements IProductRepository {
     @Override
     public Product findById(Integer id) {
         return productMapper.toProduct(iProductCrudRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Producto con "+id+" no existe")
+                () -> new ProductNotFoundException(id)
         ));
     }
 
     @Override
     public void deleteById(Integer id) {
         iProductCrudRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Producto con id " +id+" no existe")
+                () -> new ProductNotFoundException(id)
         );
         iProductCrudRepository.deleteById(id);
     }

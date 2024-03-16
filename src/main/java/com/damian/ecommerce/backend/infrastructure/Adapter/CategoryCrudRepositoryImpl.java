@@ -2,6 +2,7 @@ package com.damian.ecommerce.backend.infrastructure.Adapter;
 
 import com.damian.ecommerce.backend.domain.model.Category;
 import com.damian.ecommerce.backend.domain.port.ICategoryRepository;
+import com.damian.ecommerce.backend.infrastructure.Exceptions.CategoryNotFoundException;
 import com.damian.ecommerce.backend.infrastructure.Mapper.CategoryMapper;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +30,7 @@ public class CategoryCrudRepositoryImpl implements ICategoryRepository {
     @Override
     public Category findById(Integer id) {
         return categoryMapper.toCategory(iCategoryCrudRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Categoria con "+ id + " no existe")
+                () -> new CategoryNotFoundException(id)
         ));
     }
 
