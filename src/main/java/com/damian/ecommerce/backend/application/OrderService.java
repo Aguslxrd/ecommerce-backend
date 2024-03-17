@@ -25,4 +25,8 @@ public class OrderService {
     public void updateStateById(Integer orderId, String state){
         iOrderRepository.updateStateById(orderId, state);
     }
+
+    public Order findById(Integer id){
+        return iOrderRepository.findById(id);
+    }
 }
