@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/api/v1/admin/products")
 @Slf4j
@@ -19,10 +21,24 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> save(@RequestBody Product product){
-        if (product == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Product> save(@RequestParam("id") Integer id,
+                                        @RequestParam("code") String code,
+                                        @RequestParam("name") String name,
+                                        @RequestParam("description") String description,
+                                        @RequestParam("price") BigDecimal price,
+                                        @RequestParam("urlImage") String urlImage,
+                                        @RequestParam("userId") Integer userId,
+                                        @RequestParam("categoryId") Integer categoryId){
+        Product product = new Product();
+        product.setId(id);
+        product.setCode(code);
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setUrlImage(urlImage);
+        product.setUserId(userId);
+        product.setCategoryId(categoryId);
+
         log.info("Nombre producto: {}" , product.getName());
         log.info("User ID: {}" , product.getUserId());
         log.info("Category ID: {}" , product.getCategoryId());
