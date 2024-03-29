@@ -27,7 +27,7 @@ public class ProductService {
                     //cuando se haga deploy esto va a cambiar - > http://localhost..... despues de /images
                     String fileName = urlImage.substring(29);
                     log.info("nombre de imagen: {}", fileName);
-                    if (fileName.equals("default.jpg")) {
+                    if (!fileName.equals("default.jpg")) {
                         uploadFileService.deleteImage(fileName);
                     }
                 }
