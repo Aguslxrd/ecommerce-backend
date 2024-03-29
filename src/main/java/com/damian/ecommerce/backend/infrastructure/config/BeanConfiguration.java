@@ -1,9 +1,6 @@
 package com.damian.ecommerce.backend.infrastructure.config;
 
-import com.damian.ecommerce.backend.application.CategoryService;
-import com.damian.ecommerce.backend.application.OrderService;
-import com.damian.ecommerce.backend.application.ProductService;
-import com.damian.ecommerce.backend.application.UserService;
+import com.damian.ecommerce.backend.application.*;
 import com.damian.ecommerce.backend.domain.port.ICategoryRepository;
 import com.damian.ecommerce.backend.domain.port.IOrderRepository;
 import com.damian.ecommerce.backend.domain.port.IProductRepository;
@@ -25,8 +22,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public ProductService productService(IProductRepository iProductRepository){
-        return new ProductService(iProductRepository);
+    public ProductService productService(IProductRepository iProductRepository, UploadFileService uploadFileService){
+        return new ProductService(iProductRepository, uploadFileService);
     }
 
     @Bean
