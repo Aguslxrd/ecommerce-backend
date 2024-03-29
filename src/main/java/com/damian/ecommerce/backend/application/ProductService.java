@@ -25,10 +25,10 @@ public class ProductService {
                 String urlImage = product.getUrlImage();
                 if (urlImage != null && urlImage.length() > 29) {
                     //cuando se haga deploy esto va a cambiar - > http://localhost..... despues de /images
-                    String name = urlImage.substring(29);
-                    log.info("nombre de imagen: {}", name);
-                    if (name.equals("default.jpg")) {
-                        uploadFileService.deleteImage(name);
+                    String fileName = urlImage.substring(29);
+                    log.info("nombre de imagen: {}", fileName);
+                    if (fileName.equals("default.jpg")) {
+                        uploadFileService.deleteImage(fileName);
                     }
                 }
                 product.setUrlImage(uploadFileService.uploadImage(multipartFile));
@@ -54,7 +54,7 @@ public class ProductService {
             //cuando se haga deploy esto va a cambiar - > http://localhost..... despues de /images
             String name = urlImage.substring(29);
             log.info("nombre de imagen: {}", name);
-            if (name.equals("default.jpg")) {
+            if (!name.equals("default.jpg")) {
                 uploadFileService.deleteImage(name);
             }
         }
