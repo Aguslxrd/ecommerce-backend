@@ -30,4 +30,9 @@ public class BeanConfiguration {
     public OrderService orderService(IOrderRepository iOrderRepository){
         return new OrderService(iOrderRepository);
     }
+
+    @Bean
+    public UploadFileService uploadFileService (){
+        return new UploadFileService();
+    }
 }
