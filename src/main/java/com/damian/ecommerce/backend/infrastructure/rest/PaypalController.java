@@ -1,6 +1,7 @@
 package com.damian.ecommerce.backend.infrastructure.rest;
 
 import com.damian.ecommerce.backend.domain.model.DataPayment;
+import com.damian.ecommerce.backend.domain.model.UrlPaypalResponse;
 import com.damian.ecommerce.backend.infrastructure.Service.PaypalService;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -19,7 +20,7 @@ public class PaypalController {
     private final String CANCEL_URL = "http://localhost:8085/api/v1/payments/cancel";
 
     @PostMapping
-    public String createPayment(@RequestBody DataPayment dataPayment) throws PayPalRESTException {
+    public UrlPaypalResponse createPayment(@RequestBody DataPayment dataPayment) throws PayPalRESTException {
         Payment payment = paypalService.createPayment(
             Double.valueOf(dataPayment.getAmount()),
             dataPayment.getCurrency(),
@@ -30,11 +31,11 @@ public class PaypalController {
             SUCCESS_URL
         );
         for (Links links : payment.getLinks()){
-            if (links.getRel().equals("approval_url")){ //si el pago esta aprovado
-                return links.getHref();
+            if (links.getRel().equals("approval_url")){ //si el pago esta aprobado
+                return new UrlPaypalResponse(links.getHref());
             }
         }
-        return "";
+        return new UrlPaypalResponse("");
     }
     @GetMapping("/success")
     public RedirectView paymentSuccessView(
