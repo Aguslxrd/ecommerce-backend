@@ -3,11 +3,13 @@ package com.damian.ecommerce.backend.infrastructure.Service;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Service
 public class PaypalService {
     private final APIContext apiContext;
 
