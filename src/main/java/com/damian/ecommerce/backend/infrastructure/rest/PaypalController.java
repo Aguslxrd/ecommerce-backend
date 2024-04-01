@@ -38,18 +38,17 @@ public class PaypalController {
         return new UrlPaypalResponse("http://localhost:4200");
     }
     @GetMapping("/success")
-    public RedirectView paymentSuccessView(
+    public RedirectView paymentSuccess(
             @RequestParam("paymentId") String paymentId,
-            @RequestParam("payerId") String payerId
+            @RequestParam("PayerID") String payerId
     ){
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")){
-                //return new RedirectView("http://localhost:4200/payment/success");
-                return new RedirectView("http://localhost:4200");
+                return new RedirectView("http://localhost:4200/payment/success");
             }
         } catch (PayPalRESTException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return new RedirectView("http://localhost:4200");
     }
