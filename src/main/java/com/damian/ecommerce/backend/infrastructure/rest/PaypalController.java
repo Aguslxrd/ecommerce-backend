@@ -45,7 +45,8 @@ public class PaypalController {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")){
-                return new RedirectView("http://localhost:4200/payment/success");
+                //return new RedirectView("http://localhost:4200/payment/success");
+                return new RedirectView("http://localhost:4200");
             }
         } catch (PayPalRESTException e) {
             throw new RuntimeException(e);
