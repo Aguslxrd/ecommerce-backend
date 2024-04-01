@@ -35,7 +35,7 @@ public class PaypalController {
                 return new UrlPaypalResponse(links.getHref());
             }
         }
-        return new UrlPaypalResponse("");
+        return new UrlPaypalResponse("http://localhost:4200");
     }
     @GetMapping("/success")
     public RedirectView paymentSuccessView(
@@ -50,7 +50,7 @@ public class PaypalController {
         } catch (PayPalRESTException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return new RedirectView("http://localhost:4200");
     }
 
     @GetMapping("/cancel")
