@@ -35,4 +35,10 @@ public class BeanConfiguration {
     public UploadFileService uploadFileService (){
         return new UploadFileService();
     }
+
+    @Bean
+    public RegistrationService registrationService(IUserRepository iUserRepository){
+        return new RegistrationService(iUserRepository);
+    }
+
 }
