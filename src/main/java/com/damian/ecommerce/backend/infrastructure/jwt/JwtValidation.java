@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import static com.damian.ecommerce.backend.infrastructure.jwt.Constants.*;
 
 public class JwtValidation {
-    public static boolean tokenExistsOnRequest(HttpServletRequest request, HttpServletResponse){
+    public static boolean tokenExistsOnRequest(HttpServletRequest request, HttpServletResponse httpServletResponse){
         String header = request.getHeader(HEADER_AUTHORIZATION);
         if (header == null || !header.startsWith(TOKEN_BEARER_PREFIX)){
             return false;
