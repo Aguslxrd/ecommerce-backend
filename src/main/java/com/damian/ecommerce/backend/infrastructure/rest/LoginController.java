@@ -1,5 +1,6 @@
 package com.damian.ecommerce.backend.infrastructure.rest;
 
+import com.damian.ecommerce.backend.infrastructure.dto.JwtClientResponse;
 import com.damian.ecommerce.backend.infrastructure.dto.UserDTO;
 import com.damian.ecommerce.backend.infrastructure.jwt.JwtGenerator;
 import jakarta.validation.Valid;
@@ -27,9 +28,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult){
+    public ResponseEntity<JwtClientResponse> login(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Authentication authentication = authenticationManager.authenticate(
@@ -46,7 +47,8 @@ public class LoginController {
                 .toString());
 
         String token = jwtGenerator.getToken(userDTO.username());
+        JwtClientResponse jwtClientResponse = new JwtClientResponse(token);
 
-        return new ResponseEntity<>("tokensito - >" + token ,HttpStatus.OK);
+        return new ResponseEntity<>(jwtClientResponse ,HttpStatus.OK);
     }
 }
