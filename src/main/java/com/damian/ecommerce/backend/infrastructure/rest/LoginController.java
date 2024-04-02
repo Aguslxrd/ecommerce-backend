@@ -1,6 +1,7 @@
 package com.damian.ecommerce.backend.infrastructure.rest;
 
 import com.damian.ecommerce.backend.infrastructure.dto.UserDTO;
+import com.damian.ecommerce.backend.infrastructure.jwt.JwtGenerator;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,14 +14,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/auth")
+@RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class LoginController {
     private final AuthenticationManager authenticationManager;
+    private final JwtGenerator jwtGenerator;
 
-    public LoginController(AuthenticationManager authenticationManager) {
+    public LoginController(AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PostMapping("/login")
@@ -41,6 +44,9 @@ public class LoginController {
                 findFirst()
                 .get()
                 .toString());
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        String token = jwtGenerator.getToken(userDTO.username());
+
+        return new ResponseEntity<>("tokensito - >" + token ,HttpStatus.OK);
     }
 }

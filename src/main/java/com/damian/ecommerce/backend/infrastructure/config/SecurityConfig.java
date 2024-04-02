@@ -1,5 +1,6 @@
 package com.damian.ecommerce.backend.infrastructure.config;
 
+import com.damian.ecommerce.backend.infrastructure.jwt.JwtAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,10 +9,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    private final JwtAuthorizationFilter authorizationFilter;
+
+    public SecurityConfig(JwtAuthorizationFilter authorizationFilter) {
+        this.authorizationFilter = authorizationFilter;
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -26,8 +34,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/orders/**").hasRole("USER")
                         .requestMatchers("/api/v1/payments/**").hasRole("USER")
                         .requestMatchers("/api/v1/public/home/products").permitAll()
-                        .requestMatchers("/gapi/v1/auth/**").permitAll().anyRequest().authenticated()
-        );
+                        .requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated()
+        ).addFilterAfter(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 
