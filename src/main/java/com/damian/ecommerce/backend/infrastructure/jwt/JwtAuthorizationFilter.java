@@ -33,19 +33,27 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 if (claims.get("authorities") != null) {
                     setAuthentication(claims, customUserDetailService);
                 } else {
-                    SecurityContextHolder.clearContext(); // se elimina si el token es null
+                    clearSecurityContext();
                 }
             } else {
-                SecurityContextHolder.clearContext();
+                clearSecurityContext();
             }
             filterChain.doFilter(request, response);
         }catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException exception){
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            handleJwtException(response, exception);
             return;
 
         }
 
+    }
+
+    private void handleJwtException(HttpServletResponse response, Exception exception) throws IOException {
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, exception.getMessage());
+    }
+
+    private void clearSecurityContext() { // se elimina si el token es null
+        SecurityContextHolder.clearContext();
     }
 
 }
