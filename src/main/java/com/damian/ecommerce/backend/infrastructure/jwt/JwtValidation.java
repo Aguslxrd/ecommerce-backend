@@ -12,25 +12,29 @@ import org.springframework.security.core.userdetails.UserDetails;
 import static com.damian.ecommerce.backend.infrastructure.jwt.Constants.*;
 
 public class JwtValidation {
-    public static boolean tokenExistsOnRequest(HttpServletRequest request, HttpServletResponse httpServletResponse){
+
+    public static boolean tokenExists(HttpServletRequest request, HttpServletResponse response){
         String header = request.getHeader(HEADER_AUTHORIZATION);
-        if (header == null || !header.startsWith(TOKEN_BEARER_PREFIX)){
+        if (header == null || !header.startsWith(TOKEN_BEARER_PREFIX) )
             return false;
-        }
         return true;
     }
 
-    public static Claims JWTIsValid(HttpServletRequest request){
+    //valida que el token sea el correcto
+    public static Claims JWTValid(HttpServletRequest request){
         String jwtToken = request.getHeader(HEADER_AUTHORIZATION).replace(TOKEN_BEARER_PREFIX, "");
+
         return Jwts.parserBuilder()
                 .setSigningKey(getSignedKey(SECRET_KEY))
-                .build().parseClaimsJwt(jwtToken).getBody();
+                .build()
+                .parseClaimsJws(jwtToken).getBody();
     }
 
-    //autentica al usuario credenciales y role
-    public static void setAuthentication(Claims claims, CustomUserDetailService customUserDetailService){
-        UserDetails userDetails = customUserDetailService.loadUserByUsername(claims.getSubject()); // trae el username = email de la persona autenticada
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    // autenticar al usuario en spring
+    public static  void setAuthetication(Claims claims, CustomUserDetailService customUserDetailService){
+        UserDetails userDetails = customUserDetailService.loadUserByUsername(claims.getSubject());
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
