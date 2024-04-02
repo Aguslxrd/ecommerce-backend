@@ -15,19 +15,19 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return  authenticationConfiguration.getAuthenticationManager();
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf( csrf-> csrf.disable()).authorizeHttpRequests(
+        httpSecurity.csrf(csrf -> csrf.disable()).authorizeRequests(
                 auth -> auth.requestMatchers("api/v1/auth/**").permitAll().anyRequest().authenticated()
         );
-        return  httpSecurity.build();
+        return httpSecurity.build();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
