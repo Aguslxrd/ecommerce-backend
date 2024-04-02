@@ -26,7 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/orders/**").hasRole("USER")
                         .requestMatchers("/api/v1/payments/**").hasRole("USER")
                         .requestMatchers("/api/v1/public/home/products").permitAll()
-                        .requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated()
+                        .requestMatchers("/gapi/v1/auth/**").permitAll().anyRequest().authenticated()
         );
         return httpSecurity.build();
     }
