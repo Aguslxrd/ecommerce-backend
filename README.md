@@ -2,6 +2,9 @@
 
 Este es el repositorio del backend de una aplicación de comercio electrónico desarrollado en Java utilizando el framework Spring. El backend proporciona una API RESTful segura para gestionar productos, pedidos y autenticación.
 
+# Frontend 
+https://github.com/Aguslxrd/ecommerce-frontend
+
 ## Características principales
 
 - **Autenticación y autorización**: Implementa JSON Web Tokens (JWT) y Spring Security para la autenticación de usuarios y control de acceso basado en roles.
