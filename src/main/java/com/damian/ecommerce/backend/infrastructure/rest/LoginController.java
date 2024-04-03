@@ -1,5 +1,7 @@
 package com.damian.ecommerce.backend.infrastructure.rest;
 
+import com.damian.ecommerce.backend.application.UserService;
+import com.damian.ecommerce.backend.domain.model.User;
 import com.damian.ecommerce.backend.infrastructure.dto.JwtClientResponse;
 import com.damian.ecommerce.backend.infrastructure.dto.UserDTO;
 import com.damian.ecommerce.backend.infrastructure.jwt.JwtGenerator;
@@ -22,9 +24,12 @@ public class LoginController {
     private final AuthenticationManager authenticationManager;
     private final JwtGenerator jwtGenerator;
 
-    public LoginController(AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) {
+    private final UserService userService;
+
+    public LoginController(AuthenticationManager authenticationManager, JwtGenerator jwtGenerator, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtGenerator = jwtGenerator;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -46,8 +51,10 @@ public class LoginController {
                 .get()
                 .toString());
 
+        User user = userService.findByEmail(userDTO.username());
+
         String token = jwtGenerator.getToken(userDTO.username());
-        JwtClientResponse jwtClientResponse = new JwtClientResponse(token);
+        JwtClientResponse jwtClientResponse = new JwtClientResponse(token, user.getId());
 
         return new ResponseEntity<>(jwtClientResponse ,HttpStatus.OK);
     }
